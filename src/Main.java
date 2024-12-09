@@ -29,9 +29,11 @@ public class Main {
         while (true) {
             System.out.println("\nAdmin Menu:");
             System.out.println("1. Add Food");
-            System.out.println("2. Remove Food");
-            System.out.println("3. Show All Food");
-            System.out.println("4. Back");
+            System.out.println("2. Update Food");
+            System.out.println("3. Remove Food");
+            System.out.println("4. Search Food by Name");
+            System.out.println("5. Show All Food");
+            System.out.println("6. Back");
             System.out.print("Choose: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -50,12 +52,26 @@ public class Main {
                     System.out.println("Food added successfully!");
                 }
                 case 2 -> {
+                    System.out.print("Enter Food Name to Update: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter New Price: ");
+                    double newPrice = scanner.nextDouble();
+                    System.out.print("Enter New Quantity: ");
+                    int newQuantity = scanner.nextInt();
+                    foodManager.updateFood(name, newPrice, newQuantity);
+                }
+                case 3 -> {
                     System.out.print("Enter Food Name to Remove: ");
                     String name = scanner.nextLine();
                     foodManager.removeFoodByName(name);
                 }
-                case 3 -> foodManager.showAllFood();
                 case 4 -> {
+                    System.out.print("Enter Food Name to Search: ");
+                    String name = scanner.nextLine();
+                    foodManager.searchFoodByName(name);
+                }
+                case 5 -> foodManager.showAllFood();
+                case 6 -> {
                     System.out.println("Returning to Main Menu...");
                     return;
                 }
@@ -69,8 +85,10 @@ public class Main {
             System.out.println("\nClient Menu:");
             System.out.println("1. Show All Food");
             System.out.println("2. Place an Order");
-            System.out.println("3. Show Orders");
-            System.out.println("4. Back");
+            System.out.println("3. Show Current Orders");
+            System.out.println("4. Clear Current Orders");
+            System.out.println("5. Show Order History");
+            System.out.println("6. Back");
             System.out.print("Choose: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -91,8 +109,10 @@ public class Main {
                         }
                     }
                 }
-                case 3 -> foodManager.showAllOrders();
-                case 4 -> {
+                case 3 -> foodManager.showOrders();
+                case 4 -> foodManager.clearOrders();
+                case 5 -> foodManager.showOrderHistory();
+                case 6 -> {
                     System.out.println("Returning to Main Menu...");
                     return;
                 }

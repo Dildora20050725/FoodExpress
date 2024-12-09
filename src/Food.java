@@ -13,7 +13,6 @@ public class Food {
         this.quantity = quantity;
     }
 
-    // Getter va Setter metodlar
     public int getId() {
         return id;
     }
