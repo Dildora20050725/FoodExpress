@@ -1,8 +1,19 @@
 public class Food {
-    int id;
-  String countryOfFood;
-  String nameOfFood;
+    private int id;
+    private String countryOfFood;
+    private String nameOfFood;
+    private double priceOfFood;
+    private int quantity;
 
+    public Food(int id, String countryOfFood, String nameOfFood, double priceOfFood, int quantity) {
+        this.id = id;
+        this.countryOfFood = countryOfFood;
+        this.nameOfFood = nameOfFood;
+        this.priceOfFood = priceOfFood;
+        this.quantity = quantity;
+    }
+
+    // Getter va Setter metodlar
     public int getId() {
         return id;
     }
@@ -11,47 +22,55 @@ public class Food {
         this.id = id;
     }
 
-    double priceOfFood;
-
     public String getCountryOfFood() {
         return countryOfFood;
     }
+
     public void setCountryOfFood(String countryOfFood) {
         this.countryOfFood = countryOfFood;
     }
+
     public String getNameOfFood() {
         return nameOfFood;
     }
+
     public void setNameOfFood(String nameOfFood) {
         this.nameOfFood = nameOfFood;
     }
+
     public double getPriceOfFood() {
         return priceOfFood;
     }
+
     public void setPriceOfFood(double priceOfFood) {
-        this.priceOfFood = priceOfFood;
+        if (priceOfFood < 0) {
+            System.out.println("Price cannot be negative. Setting to 0.");
+            this.priceOfFood = 0;
+        } else {
+            this.priceOfFood = priceOfFood;
+        }
     }
+
     public int getQuantity() {
         return quantity;
     }
+
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        if (quantity < 0) {
+            System.out.println("Quantity cannot be negative. Setting to 0.");
+            this.quantity = 0;
+        } else {
+            this.quantity = quantity;
+        }
     }
-    int quantity;
-    public void updateFood(String name, double price){
+
+    public void updateFood(String name, double price) {
         this.nameOfFood = name;
         this.priceOfFood = price;
     }
-    public Food(){
-    }
-    public Food(int id, String countryOfFood, String nameOfFood, double priceOfFood, int quantity) {
-        this.id = id;
-        this.countryOfFood = countryOfFood;
-        this.nameOfFood = nameOfFood;
-        this.priceOfFood = priceOfFood;
-        this.quantity = quantity;
-    }
-    public void showFoodData(){
-        System.out.printf("\nID: %s\nCountry: %s\nName: %s\nPrice: %s\nQuantity: %s", id, countryOfFood, nameOfFood, priceOfFood, quantity);
+
+    public void showFoodData() {
+        System.out.printf("\nID: %d\nCountry: %s\nName: %s\nPrice: %.2f\nQuantity: %d\n",
+                id, countryOfFood, nameOfFood, priceOfFood, quantity);
     }
 }

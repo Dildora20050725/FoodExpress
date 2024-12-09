@@ -4,67 +4,66 @@ public class FoodManager {
     ArrayList<Food> foods = new ArrayList<>();
     ArrayList<MakeOrder> orders = new ArrayList<>();
 
-
-    public void addFood(Food food){
+    // Add food
+    public void addFood(Food food) {
         foods.add(food);
     }
-    public void makeOrder(MakeOrder makeOrder){
+
+    // Place an order
+    public void makeOrder(MakeOrder makeOrder) {
         orders.add(makeOrder);
     }
-    public void removeFoodByName(String name){
-        if (foods.isEmpty()){
-            System.out.println("Not found food!");
-        }else {
-            for (Food food:foods){
-                if (food.getNameOfFood().equals(name)){
-                    foods.remove(food);
-                }
-            }
-        }
-    }
-    public void searchFoodByName(String name){
-        boolean found = false;
-        if (foods.isEmpty()){
-            System.out.println("Not found food!");
-        }else {
-            for (Food food: foods){
-                if (food.getNameOfFood().equals(name)){
-                    food.showFoodData();
-                    found = true;
-                    break;
-                }
-            }
-        }
-        if (!found){
-            System.out.println("Food with this name: "+name+"was not found!");
-        }
 
+    // Remove food by name
+    public void removeFoodByName(String name) {
+        boolean removed = false;
+        for (int i = 0; i < foods.size(); i++) {
+            if (foods.get(i).getNameOfFood().equalsIgnoreCase(name)) {
+                foods.remove(i);
+                removed = true;
+                System.out.println(name + " removed successfully.");
+                break;
+            }
+        }
+        if (!removed) {
+            System.out.println("Food not found!");
+        }
     }
-    public void showAllFood(){
-        if (foods.isEmpty()){
-            System.out.println("Not found food!");
-        }else {
-            for (Food food: foods){
+
+    // Search food by name
+    public void searchFoodByName(String name) {
+        boolean found = false;
+        for (Food food : foods) {
+            if (food.getNameOfFood().equalsIgnoreCase(name)) {
+                food.showFoodData();
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Food not found!");
+        }
+    }
+
+    // Show all food items
+    public void showAllFood() {
+        if (foods.isEmpty()) {
+            System.out.println("No food available.");
+        } else {
+            for (Food food : foods) {
                 food.showFoodData();
             }
-            System.out.println("\n-----------------------------------------");
-        }
-
-    }
-    public void orderList(){
-        double totalAmount = 0;
-        if (orders.isEmpty()){
-            System.out.println("This order is not available!");
-        }else {
-            System.out.println("Order list: ");
-
-            System.out.println("TotalAmount: "+totalAmount);
         }
     }
-    public void showAllHistory(){
-        for (MakeOrder makeOrder: orders){
-            makeOrder.showAllOrders();
+
+    // Show all orders
+    public void showAllOrders() {
+        if (orders.isEmpty()) {
+            System.out.println("No orders have been placed yet.");
+        } else {
+            for (MakeOrder order : orders) {
+                order.showAllOrders();
+            }
         }
     }
 }
-
