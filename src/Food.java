@@ -12,7 +12,6 @@ public class Food {
         this.priceOfFood = priceOfFood;
         this.quantity = quantity;
     }
-
     public int getId() {
         return id;
     }

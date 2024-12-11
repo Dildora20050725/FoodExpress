@@ -1,27 +1,92 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         FoodManager foodManager = new FoodManager();
-
-        while (true) {
-            System.out.println("\n=== FoodExpress ===");
-            System.out.println("1. Admin");
-            System.out.println("2. Client");
-            System.out.println("3. Exit");
-            System.out.print("Choose: ");
-            int choice = scanner.nextInt();
-
-            switch (choice) {
-                case 1 -> adminMenu(scanner, foodManager);
-                case 2 -> clientMenu(scanner, foodManager);
-                case 3 -> {
-                    System.out.println("Exiting... Goodbye!");
-                    return;
+        ArrayList<Register> registers = new ArrayList<>();
+        System.out.println("---Welcome to FoodExpress---");
+        System.out.println("1.Registration");
+        System.out.println("2.Login");
+        int choose = scanner.nextInt();
+        boolean back = false;
+        switch (choose) {
+            case 1:
+                System.out.println("Enter first name: ");
+                String firstName = scanner.next();
+                String f1 = "";
+                for (int i = 0; i < firstName.length(); i++) {
+                    char ch = firstName.charAt(i);
+                    if (Character.isLetter(ch)){
+                        f1 = firstName;
+                    }
                 }
-                default -> System.out.println("Invalid choice!");
-            }
+                System.out.println("Enter last name: ");
+                String lastName = scanner.next();
+                String l1 = "";
+                for (int i = 0; i < firstName.length(); i++) {
+                    char ch = firstName.charAt(i);
+                    if (Character.isLetter(ch)){
+                        l1 = firstName;
+                    }
+                }
+                System.out.println("Enter phone number: ");
+                String phoneNumber = scanner.next();
+                String p1 = "";
+                if (phoneNumber.length() == 12) {
+                    phoneNumber.startsWith("998" , 3);
+                    p1 = phoneNumber;
+                }
+                Register register = new Register(firstName, lastName, phoneNumber);
+                registers.add(register);
+                System.out.println("Registration completed.");
+                while (true) {
+                    System.out.println("\n=== FoodExpress ===");
+                    System.out.println("1. Admin");
+                    System.out.println("2. Client");
+                    System.out.println("3. Exit");
+                    System.out.print("Choose: ");
+                    int choice = scanner.nextInt();
+                    switch (choice) {
+                        case 1 -> adminMenu(scanner, foodManager);
+                        case 2 -> clientMenu(scanner, foodManager);
+                        case 3 -> {
+                            System.out.println("Exiting... Goodbye!");
+                            return;
+                        }
+                        default -> System.out.println("Invalid choice!");
+                    }
+                }
+            case 2:
+                System.out.println("Enter first name: ");
+                String firstname = scanner.nextLine();
+                System.out.println("Enter last name: ");
+                String lastname = scanner.nextLine();
+                Register register1 = new Register();
+                if (firstname.equals(register1.getFirstName()) && lastname.equals(register1.getLastName())) {
+                    while (true) {
+                        System.out.println("\n=== FoodExpress ===");
+                        System.out.println("1. Admin");
+                        System.out.println("2. Client");
+                        System.out.println("3. Exit");
+                        System.out.print("Choose: ");
+                        int choice = scanner.nextInt();
+                        switch (choice) {
+                            case 1 -> adminMenu(scanner, foodManager);
+                            case 2 -> clientMenu(scanner, foodManager);
+                            case 3 -> {
+                                System.out.println("Returning to Main Menu...");
+                                return;
+                            }
+                            default -> System.out.println("Invalid choice!");
+                        }
+                    }
+                }else {
+                    System.out.println("Invalid choice!");
+                }
+                break;
+
         }
     }
 
@@ -37,7 +102,6 @@ public class Main {
             System.out.print("Choose: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
-
             switch (choice) {
                 case 1 -> {
                     System.out.print("Enter Food Name: ");
