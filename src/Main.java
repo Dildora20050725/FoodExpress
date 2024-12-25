@@ -1,95 +1,140 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
+    private HashMap<String, String> users = new HashMap<>();
+    public boolean register(String username, String password) {
+        if (users.containsKey(username)) {
+            return false;
+        }
+        users.put(username, password);
+        return true;
+    }
+    public boolean login(String username, String password) {
+        return users.containsKey(username) && users.get(username).equals(password);
+    }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         FoodManager foodManager = new FoodManager();
-        System.out.println("---Welcome to FoodExpress---");
-        System.out.println("1.Registration");
-        System.out.println("2.Login");
-        int choose = scanner.nextInt();
-        boolean back = false;
-        switch (choose) {
-            case 1:
-                System.out.println("Enter first name: ");
-                String firstName = scanner.next();
-                String f1 = "";
-                for (int i = 0; i < firstName.length(); i++) {
-                    char ch = firstName.charAt(i);
-                    if (Character.isLetter(ch)){
-                        f1 = firstName;
-                    }
-                }
-                System.out.println("Enter last name: ");
-                String lastName = scanner.next();
-                String l1 = "";
-                for (int i = 0; i < firstName.length(); i++) {
-                    char ch = firstName.charAt(i);
-                    if (Character.isLetter(ch)){
-                        l1 = firstName;
-                    }
-                }
-                System.out.println("Enter phone number: ");
-                String phoneNumber = scanner.next();
-                String p1 = "";
-                if (phoneNumber.length() == 12) {
-                    phoneNumber.startsWith("998" , 3);
-                    p1 = phoneNumber;
-                }
-                Register register = new Register(firstName, lastName, phoneNumber);
-                registers.add(register);
-                System.out.println("Registration completed.");
-                while (true) {
-                    System.out.println("\n=== FoodExpress ===");
-                    System.out.println("1. Admin");
-                    System.out.println("2. Client");
-                    System.out.println("3. Exit");
-                    System.out.print("Choose: ");
-                    int choice = scanner.nextInt();
-                    switch (choice) {
-                        case 1 -> adminMenu(scanner, foodManager);
-                        case 2 -> clientMenu(scanner, foodManager);
-                        case 3 -> {
-                            System.out.println("Exiting... Goodbye!");
-                            return;
-                        }
-                        default -> System.out.println("Invalid choice!");
-                    }
-                }
-            case 2:
-                System.out.println("Enter first name: ");
-                String firstname = scanner.nextLine();
-                System.out.println("Enter last name: ");
-                String lastname = scanner.nextLine();
-                Register register1 = new Register();
-                if (firstname.equals(register1.getFirstName()) && lastname.equals(register1.getLastName())) {
-                    while (true) {
-                        System.out.println("\n=== FoodExpress ===");
-                        System.out.println("1. Admin");
-                        System.out.println("2. Client");
-                        System.out.println("3. Exit");
-                        System.out.print("Choose: ");
-                        int choice = scanner.nextInt();
-                        switch (choice) {
-                            case 1 -> adminMenu(scanner, foodManager);
-                            case 2 -> clientMenu(scanner, foodManager);
-                            case 3 -> {
-                                System.out.println("Returning to Main Menu...");
-                                return;
-                            }
-                            default -> System.out.println("Invalid choice!");
-                        }
-                    }
-                }else {
-                    System.out.println("Invalid choice!");
-                }
-                break;
+        Main userAuth = new Main();
+        while (true) {
+            System.out.println("1. Ro'yxatdan o'tish");
+            System.out.println("2. Login");
+            System.out.println("3. Chiqish");
+            System.out.print("Tanlang: ");
+            int choice1 = scanner.nextInt();
+            scanner.nextLine(); // Enterni tozalash
+            switch (choice1) {
+                case 1:
+                    System.out.print("Yangi username kiriting: ");
+                    String newUsername = scanner.nextLine();
+                    System.out.print("Yangi parol kiriting: ");
+                    String newPassword = scanner.nextLine();
 
+                    if (userAuth.register(newUsername, newPassword)) {
+                        System.out.println("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
+
+                        while (true) {
+                            System.out.println("\n=== FoodExpress ===");
+                            System.out.println("1. Admin");
+                            System.out.println("2. Client");
+                            System.out.println("3. Exit");
+                            System.out.print("Choose: ");
+                            int choice = scanner.nextInt();
+                            switch (choice) {
+                                case 1 -> adminMenu(scanner, foodManager);
+                                case 2 -> clientMenu(scanner, foodManager);
+                                case 3 -> {
+                                    System.out.println("Exiting... Goodbye!");
+                                    return;
+                                }
+                                default -> System.out.println("Invalid choice!");
+                            }
+                        }
+                    } else {
+                        System.out.println("Bu username allaqachon mavjud!");
+                    }
+                    break;
+                case 2:
+                    System.out.print("Username kiriting: ");
+                    String username = scanner.nextLine();
+                    System.out.print("Parol kiriting: ");
+                    String password = scanner.nextLine();
+                    if (userAuth.login(username, password)) {
+                        System.out.println("Muvaffaqiyatli login qilindi!");
+                        while (true) {
+                            System.out.println("\n=== FoodExpress ===");
+                            System.out.println("1. Admin");
+                            System.out.println("2. Client");
+                            System.out.println("3. Exit");
+                            System.out.print("Choose: ");
+                            int choice = scanner.nextInt();
+                            switch (choice) {
+                                case 1 -> adminMenu(scanner, foodManager);
+                                case 2 -> clientMenu(scanner, foodManager);
+                                case 3 -> {
+                                    System.out.println("Exiting... Goodbye!");
+                                    return;
+                                }
+                                default -> System.out.println("Invalid choice!");
+                            }
+                        }
+                    } else {
+                        System.out.println("Username yoki parol noto'g'ri!");
+                    }
+                    break;
+                case 3:
+                    System.out.println("Dasturdan chiqildi.");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Noto'g'ri tanlov! Qayta urinib ko'ring.");
+            }
+        }
+    }
+    private static void clientMenu(Scanner scanner, FoodManager foodManager) {
+        while (true) {
+            System.out.println("\nClient Menu:");
+            System.out.println("1. Show All Food");
+            System.out.println("2. Place an Order");
+            System.out.println("3. Show Current Orders");
+            System.out.println("4. Clear Current Orders");
+            System.out.println("5. Show Order History");
+            System.out.println("6. Back");
+            System.out.print("Choose: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1 -> foodManager.showAllFood();
+                case 2 -> {
+                    System.out.print("Enter Food Name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter Quantity: ");
+                    int quantity = scanner.nextInt();
+                    for (Food food : foodManager.foods) {
+                        if (food.getNameOfFood().equalsIgnoreCase(name)) {
+                            double total = food.getPriceOfFood() * quantity;
+                            foodManager.makeOrder(new MakeOrder(name, total));
+                            System.out.println("Order placed successfully!");
+                            break;
+                        }
+                    }
+                }
+                case 3 -> foodManager.showOrders();
+                case 4 -> foodManager.clearOrders();
+                case 5 -> foodManager.showOrderHistory();
+                case 6 -> {
+                    System.out.println("Returning to Main Menu...");
+                    return;
+                }
+                default -> System.out.println("Invalid choice!");
+            }
         }
     }
 
-    private static void adminMenu(Scanner scanner, FoodManager foodManager) {
+        private static void adminMenu (Scanner scanner, FoodManager foodManager){
         while (true) {
             System.out.println("\nAdmin Menu:");
             System.out.println("1. Add Food");
@@ -143,44 +188,5 @@ public class Main {
         }
     }
 
-    private static void clientMenu(Scanner scanner, FoodManager foodManager) {
-        while (true) {
-            System.out.println("\nClient Menu:");
-            System.out.println("1. Show All Food");
-            System.out.println("2. Place an Order");
-            System.out.println("3. Show Current Orders");
-            System.out.println("4. Clear Current Orders");
-            System.out.println("5. Show Order History");
-            System.out.println("6. Back");
-            System.out.print("Choose: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (choice) {
-                case 1 -> foodManager.showAllFood();
-                case 2 -> {
-                    System.out.print("Enter Food Name: ");
-                    String name = scanner.nextLine();
-                    System.out.print("Enter Quantity: ");
-                    int quantity = scanner.nextInt();
-                    for (Food food : foodManager.foods) {
-                        if (food.getNameOfFood().equalsIgnoreCase(name)) {
-                            double total = food.getPriceOfFood() * quantity;
-                            foodManager.makeOrder(new MakeOrder(name, total));
-                            System.out.println("Order placed successfully!");
-                            break;
-                        }
-                    }
-                }
-                case 3 -> foodManager.showOrders();
-                case 4 -> foodManager.clearOrders();
-                case 5 -> foodManager.showOrderHistory();
-                case 6 -> {
-                    System.out.println("Returning to Main Menu...");
-                    return;
-                }
-                default -> System.out.println("Invalid choice!");
-            }
-        }
-    }
 }
+
