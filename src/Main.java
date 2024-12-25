@@ -5,7 +5,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         FoodManager foodManager = new FoodManager();
-        ArrayList<Register> registers = new ArrayList<>();
         System.out.println("---Welcome to FoodExpress---");
         System.out.println("1.Registration");
         System.out.println("2.Login");
